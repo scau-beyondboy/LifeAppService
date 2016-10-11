@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scau.dao.UserDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.scau.entity.UserDetail" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_num" property="userNum" jdbcType="BIGINT" />
+    <result column="user_iden" property="userIden" jdbcType="INTEGER" />
+    <result column="user_major" property="userMajor" jdbcType="VARCHAR" />
+    <result column="user_gradle" property="userGradle" jdbcType="VARCHAR" />
+    <result column="user_class" property="userClass" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_num, user_iden, user_major, user_gradle, user_class
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_detail
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_detail
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.scau.entity.UserDetail" >
+    insert into user_detail (user_id, user_num, user_iden, 
+      user_major, user_gradle, user_class
+      )
+    values (#{userId,jdbcType=BIGINT}, #{userNum,jdbcType=BIGINT}, #{userIden,jdbcType=INTEGER}, 
+      #{userMajor,jdbcType=VARCHAR}, #{userGradle,jdbcType=VARCHAR}, #{userClass,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.scau.entity.UserDetail" >
+    insert into user_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userNum != null" >
+        user_num,
+      </if>
+      <if test="userIden != null" >
+        user_iden,
+      </if>
+      <if test="userMajor != null" >
+        user_major,
+      </if>
+      <if test="userGradle != null" >
+        user_gradle,
+      </if>
+      <if test="userClass != null" >
+        user_class,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userNum != null" >
+        #{userNum,jdbcType=BIGINT},
+      </if>
+      <if test="userIden != null" >
+        #{userIden,jdbcType=INTEGER},
+      </if>
+      <if test="userMajor != null" >
+        #{userMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="userGradle != null" >
+        #{userGradle,jdbcType=VARCHAR},
+      </if>
+      <if test="userClass != null" >
+        #{userClass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scau.entity.UserDetail" >
+    update user_detail
+    <set >
+      <if test="userNum != null" >
+        user_num = #{userNum,jdbcType=BIGINT},
+      </if>
+      <if test="userIden != null" >
+        user_iden = #{userIden,jdbcType=INTEGER},
+      </if>
+      <if test="userMajor != null" >
+        user_major = #{userMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="userGradle != null" >
+        user_gradle = #{userGradle,jdbcType=VARCHAR},
+      </if>
+      <if test="userClass != null" >
+        user_class = #{userClass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scau.entity.UserDetail" >
+    update user_detail
+    set user_num = #{userNum,jdbcType=BIGINT},
+      user_iden = #{userIden,jdbcType=INTEGER},
+      user_major = #{userMajor,jdbcType=VARCHAR},
+      user_gradle = #{userGradle,jdbcType=VARCHAR},
+      user_class = #{userClass,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>
