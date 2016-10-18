@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../js/jquery-2.2.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>添加社团</title>
+
+    <style>
+        body{
+            background: #96ff7c;
+        }
+        #info_form{
+            width: 500px;
+            margin: 50px auto;
+        }
+        #info_form > div{
+            width:500px;
+            margin-top:15px;
+            position: relative;
+        }
+        #info_form > div >label{
+            display:block;
+            margin-bottom: 5px;
+        }
+        #info_form input{
+            width:300px;
+            height: 30px;
+            line-height:30px;
+            border-radius:5px;
+        }
+        #info_form textarea{
+            width:300px;
+            height:60px;
+            border-radius:5px;
+        }
+
+        #info_form input[type="submit"]{
+            width: 150px;
+            height:40px;
+            border: 1px solid #000;
+            border-radius:20px;
+            background: #ffffff;
+            position: absolute;
+            left: 80px;
+        }
+    </style>
+</head>
+<body>
+    <form id="info_form">
+        <div>
+            <label>社团名字:</label>
+            <input type="text" name="clubName"/>
+        </div>
+        <div>
+            <label >社团描述：</label>
+            <textarea maxlength="80" rows="3" cols="30" name="clubDesc" placeholder="长度限制80个字"></textarea>
+        </div>
+        <div>
+            <label>社团LOGO：</label>
+            <input type="url" name="clubLogo"/>
+        </div>
+        <div>
+            <label>社团网站：</label>
+            <input type="url" name="clubWebsite"/>
+        </div>
+
+        <div>
+            <label>社团微信号：</label>
+            <input type="text" name="clubWeixinNum"/>
+        </div>
+        <div>
+            <input type="submit" value="提交" id="bt_submit">
+        </div>
+
+    </form>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#bt_submit").click(function (e) {
+            //e.preventDefault();
+            var jsonStr = {};
+            var params=$("#info_form").serializeArray();
+            $.each(params, function() {
+                if (jsonStr[this.name] !== undefined) {
+                    if (!jsonStr[this.name].push) {
+                        jsonStr[this.name] = [jsonStr[this.name]];
+                    }
+                    jsonStr[this.name].push(this.value || '');
+                } else {
+                    jsonStr[this.name] = this.value || '';
+                }
+            });
+           // console.log(jsonStr);
+            $.ajax({
+                type:"post",
+//                dataType:"jsonp",
+                data:jsonStr,
+                url:"/club/addInfo",
+                success: function (data) {
+                    alert("添加社团成功");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert.("添加社团出错");
+                }
+//                success: function(){
+//                    alert("添加社团信息成功");
+//                },
+//                error: function() {
+//                    alert("添加社团出错");
+//                }
+            });
+        })
+    })
+</script>

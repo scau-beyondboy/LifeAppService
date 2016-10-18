@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scau.dao.ClubInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.scau.entity.ClubInfo" >
+    <id column="club_id" property="clubId" jdbcType="BIGINT" />
+    <result column="club_name" property="clubName" jdbcType="VARCHAR" />
+    <result column="club_logo" property="clubLogo" jdbcType="VARCHAR" />
+    <result column="club_website" property="clubWebsite" jdbcType="VARCHAR" />
+    <result column="club_weixin_num" property="clubWeixinNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.scau.entity.ClubInfo" extends="BaseResultMap" >
+    <result column="club_desc" property="clubDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    club_id, club_name, club_logo, club_website, club_weixin_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    club_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from club_info
+    where club_id = #{clubId,jdbcType=BIGINT}
+  </select>
+  <select id="getPartClubList" resultType="com.scau.entity.ClubInfo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from club_info ORDER BY club_id limit #{0},#{1}
+  </select>
+  <select id="getTotal" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM club_info;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from club_info
+    where club_id = #{clubId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.scau.entity.ClubInfo"  useGeneratedKeys="true" keyProperty="clubId">
+    insert into club_info (club_id, club_name, club_logo, 
+      club_website, club_weixin_num, club_desc
+      )
+    values (#{clubId,jdbcType=BIGINT}, #{clubName,jdbcType=VARCHAR}, #{clubLogo,jdbcType=VARCHAR}, 
+      #{clubWebsite,jdbcType=VARCHAR}, #{clubWeixinNum,jdbcType=VARCHAR}, #{clubDesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.scau.entity.ClubInfo" >
+    insert into club_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="clubId != null" >
+        club_id,
+      </if>
+      <if test="clubName != null" >
+        club_name,
+      </if>
+      <if test="clubLogo != null" >
+        club_logo,
+      </if>
+      <if test="clubWebsite != null" >
+        club_website,
+      </if>
+      <if test="clubWeixinNum != null" >
+        club_weixin_num,
+      </if>
+      <if test="clubDesc != null" >
+        club_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="clubId != null" >
+        #{clubId,jdbcType=BIGINT},
+      </if>
+      <if test="clubName != null" >
+        #{clubName,jdbcType=VARCHAR},
+      </if>
+      <if test="clubLogo != null" >
+        #{clubLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="clubWebsite != null" >
+        #{clubWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="clubWeixinNum != null" >
+        #{clubWeixinNum,jdbcType=VARCHAR},
+      </if>
+      <if test="clubDesc != null" >
+        #{clubDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scau.entity.ClubInfo" >
+    update club_info
+    <set >
+      <if test="clubName != null" >
+        club_name = #{clubName,jdbcType=VARCHAR},
+      </if>
+      <if test="clubLogo != null" >
+        club_logo = #{clubLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="clubWebsite != null" >
+        club_website = #{clubWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="clubWeixinNum != null" >
+        club_weixin_num = #{clubWeixinNum,jdbcType=VARCHAR},
+      </if>
+      <if test="clubDesc != null" >
+        club_desc = #{clubDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where club_id = #{clubId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.scau.entity.ClubInfo" >
+    update club_info
+    set club_name = #{clubName,jdbcType=VARCHAR},
+      club_logo = #{clubLogo,jdbcType=VARCHAR},
+      club_website = #{clubWebsite,jdbcType=VARCHAR},
+      club_weixin_num = #{clubWeixinNum,jdbcType=VARCHAR},
+      club_desc = #{clubDesc,jdbcType=LONGVARCHAR}
+    where club_id = #{clubId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scau.entity.ClubInfo" >
+    update club_info
+    set club_name = #{clubName,jdbcType=VARCHAR},
+      club_logo = #{clubLogo,jdbcType=VARCHAR},
+      club_website = #{clubWebsite,jdbcType=VARCHAR},
+      club_weixin_num = #{clubWeixinNum,jdbcType=VARCHAR}
+    where club_id = #{clubId,jdbcType=BIGINT}
+  </update>
+</mapper>

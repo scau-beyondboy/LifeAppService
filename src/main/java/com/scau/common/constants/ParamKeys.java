@@ -9,4 +9,6 @@ package com.scau.common.constants;
 public class ParamKeys {
     public static final String NICKNAME="nickname";
     public static final String PASSWORD="password";
+    public static final String PAGEACCOUNT="pageaccount";
+    public static final String PAGESIZE="pagesize";
 }
