@@ -1,7 +1,5 @@
 package com.scau.dto;
 
-import com.scau.entity.ClubInfo;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,11 +9,11 @@ import java.util.List;
  * @Data: 2016/10/18
  * @Time: 15:40
  */
-public class ClubPage implements Serializable {
+public class PageInfo<T> implements Serializable {
     private int pageAccount;
     private int pageSize;
     private int Count;
-    private List<ClubInfo> clubInfoList;
+    private List<T> data;
     private static final long serialVersionUID = 1L;
     public int getPageAccount() {
         return pageAccount;
@@ -41,21 +39,21 @@ public class ClubPage implements Serializable {
         Count = count;
     }
 
-    public List<ClubInfo> getClubInfoList() {
-        return clubInfoList;
+    public List<T> getData() {
+        return data;
     }
 
-    public void setClubInfoList(List<ClubInfo> clubInfoList) {
-        this.clubInfoList = clubInfoList;
+    public void setData(List<T> data) {
+        this.data = data;
     }
 
     @Override
     public String toString() {
-        return "ClubPage{" +
+        return "PageInfo{" +
                 "pageAccount=" + pageAccount +
                 ", pageSize=" + pageSize +
                 ", Count=" + Count +
-                ", clubInfoList=" + clubInfoList +
+                ", data=" + data +
                 '}';
     }
 }

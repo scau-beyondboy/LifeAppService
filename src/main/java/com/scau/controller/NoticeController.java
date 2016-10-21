@@ -3,8 +3,8 @@ package com.scau.controller;
 import com.scau.common.constants.ParamKeys;
 import com.scau.dto.PageInfo;
 import com.scau.dto.Result;
-import com.scau.entity.ClubInfo;
-import com.scau.service.ClubService;
+import com.scau.entity.NoticeInfo;
+import com.scau.service.NoticeServer;
 import com.scau.util.ResultUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,31 +20,30 @@ import java.util.Map;
 /**
  * @Author: beyondboy
  * @Gmail: xuguoli.scau@gamil.com
- * @Data: 2016/10/17
- * @Time: 23:54
+ * @Data: 2016/10/20
+ * @Time: 1:39
  */
 @Controller
-public class ClubController {
-    Logger logger = LoggerFactory.getLogger(ClubService.class);
+public class NoticeController {
+    Logger logger = LoggerFactory.getLogger(NoticeServer.class);
     @Autowired
-    private  ClubService clubService;
-    @RequestMapping(value = "/club/add",method = RequestMethod.GET)
+    private NoticeServer noticeServer;
+    @RequestMapping(value = "/notice/add",method = RequestMethod.GET)
     public String addClub(){
-        return "addClub";
+        return "addNotice";
     }
-    @RequestMapping(value = "/club/addInfo",method = RequestMethod.POST)
+    @RequestMapping(value ="/notice/addinfo",method = RequestMethod.POST)
     @ResponseBody
-    public Result addClubInfo(ClubInfo clubInfo){
-        clubService.addClub(clubInfo);
+    public Result addClubInfo(NoticeInfo noticeInfo){
+        noticeServer.addNotice(noticeInfo);
         return ResultUtils.SuccessResult;
     }
-
-    @RequestMapping(value = "/club/getList",method = RequestMethod.POST)
+    @RequestMapping(value = "/notice/getList",method = RequestMethod.POST)
     @ResponseBody
     public Result getClubInfo(@RequestBody Map<String,Integer> params){
         final int pageAccount=params.get(ParamKeys.PAGEACCOUNT);
         final int pageSize=params.get(ParamKeys.PAGESIZE);
-        final PageInfo pageInfo =clubService.getClubList(pageAccount,pageSize);
+        final PageInfo pageInfo =noticeServer.getNoticeList(pageAccount,pageSize);
         return ResultUtils.SuccessResultWithData(pageInfo);
     }
 }

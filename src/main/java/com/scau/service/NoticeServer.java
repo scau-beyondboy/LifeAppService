@@ -1,8 +1,8 @@
 package com.scau.service;
 
-import com.scau.dao.ClubInfoMapper;
+import com.scau.dao.NoticeInfoMapper;
 import com.scau.dto.PageInfo;
-import com.scau.entity.ClubInfo;
+import com.scau.entity.NoticeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +13,20 @@ import java.util.List;
 /**
  * @Author: beyondboy
  * @Gmail: xuguoli.scau@gamil.com
- * @Data: 2016/10/17
- * @Time: 23:54
+ * @Data: 2016/10/20
+ * @Time: 1:31
  */
 @Service
-public class ClubService {
+public class NoticeServer {
     @Autowired
-    private ClubInfoMapper clubInfoMapper;
-    Logger logger = LoggerFactory.getLogger(ClubService.class);
-    public void addClub(ClubInfo clubInfo){
-        logger.info("add club:{}",clubInfo.toString());
-        clubInfoMapper.insert(clubInfo);
+    private NoticeInfoMapper noticeInfoMapper;
+    Logger logger = LoggerFactory.getLogger(NoticeServer.class);
+    public void addNotice(NoticeInfo noticeInfo){
+        logger.info("add notice:{}",noticeInfo.toString());
+        noticeInfoMapper.insert(noticeInfo);
     }
 
-    public PageInfo getClubList(final int pageAccount, int pageSize){
+    public PageInfo getNoticeList(final int pageAccount, int pageSize){
         final int star=(pageAccount-1)*pageSize;
         final int total=getTotal();
         if(star>total){
@@ -35,16 +35,15 @@ public class ClubService {
         if(star+pageSize>total){
             pageSize=total-star;
         }
-        final PageInfo<ClubInfo> pageInfo =new PageInfo<ClubInfo>();
+        final PageInfo<NoticeInfo> pageInfo =new PageInfo<NoticeInfo>();
         pageInfo.setCount(total);
         pageInfo.setPageAccount(pageAccount);
         pageInfo.setPageSize(pageSize);
-        List<ClubInfo> clubInfos=clubInfoMapper.getPartClubList(star,pageSize);
-        pageInfo.setData(clubInfos);
+        List<NoticeInfo> noticeInfos=noticeInfoMapper.getPartNoticeList(star,pageSize);
+        pageInfo.setData(noticeInfos);
         return pageInfo;
     }
-
     public int getTotal(){
-        return clubInfoMapper.getTotal();
+        return noticeInfoMapper.getTotal();
     }
 }

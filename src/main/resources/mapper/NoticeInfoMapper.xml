@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scau.dao.NoticeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.scau.entity.NoticeInfo" >
+    <id column="notice_id" property="noticeId" jdbcType="BIGINT" />
+    <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
+    <result column="notice_date" property="noticeDate" jdbcType="DATE" />
+    <result column="notice_editor" property="noticeEditor" jdbcType="VARCHAR" />
+    <result column="notice_iden" property="noticeIden" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.scau.entity.NoticeInfo" extends="BaseResultMap" >
+    <result column="notice_desc" property="noticeDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    notice_id, notice_title, notice_date, notice_editor, notice_iden
+  </sql>
+  <sql id="Blob_Column_List" >
+    notice_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from notice_info
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </select>
+  <select id="getTotal" resultType="java.lang.Integer">
+    SELECT count(*) FROM  notice_info;
+  </select>
+  <select id="getPartNoticeList" resultType="com.scau.entity.NoticeInfo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from notice_info ORDER BY notice_id limit #{0},#{1}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from notice_info
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.scau.entity.NoticeInfo" useGeneratedKeys="true" keyProperty="noticeId">
+    insert into notice_info (notice_id, notice_title, notice_date, 
+      notice_editor, notice_iden, notice_desc
+      )
+    values (#{noticeId,jdbcType=BIGINT}, #{noticeTitle,jdbcType=VARCHAR}, #{noticeDate,jdbcType=DATE}, 
+      #{noticeEditor,jdbcType=VARCHAR}, #{noticeIden,jdbcType=VARCHAR}, #{noticeDesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.scau.entity.NoticeInfo" >
+    insert into notice_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        notice_id,
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title,
+      </if>
+      <if test="noticeDate != null" >
+        notice_date,
+      </if>
+      <if test="noticeEditor != null" >
+        notice_editor,
+      </if>
+      <if test="noticeIden != null" >
+        notice_iden,
+      </if>
+      <if test="noticeDesc != null" >
+        notice_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=BIGINT},
+      </if>
+      <if test="noticeTitle != null" >
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDate != null" >
+        #{noticeDate,jdbcType=DATE},
+      </if>
+      <if test="noticeEditor != null" >
+        #{noticeEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeIden != null" >
+        #{noticeIden,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDesc != null" >
+        #{noticeDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scau.entity.NoticeInfo" >
+    update notice_info
+    <set >
+      <if test="noticeTitle != null" >
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDate != null" >
+        notice_date = #{noticeDate,jdbcType=DATE},
+      </if>
+      <if test="noticeEditor != null" >
+        notice_editor = #{noticeEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeIden != null" >
+        notice_iden = #{noticeIden,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDesc != null" >
+        notice_desc = #{noticeDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.scau.entity.NoticeInfo" >
+    update notice_info
+    set notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_date = #{noticeDate,jdbcType=DATE},
+      notice_editor = #{noticeEditor,jdbcType=VARCHAR},
+      notice_iden = #{noticeIden,jdbcType=VARCHAR},
+      notice_desc = #{noticeDesc,jdbcType=LONGVARCHAR}
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scau.entity.NoticeInfo" >
+    update notice_info
+    set notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_date = #{noticeDate,jdbcType=DATE},
+      notice_editor = #{noticeEditor,jdbcType=VARCHAR},
+      notice_iden = #{noticeIden,jdbcType=VARCHAR}
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </update>
+</mapper>
