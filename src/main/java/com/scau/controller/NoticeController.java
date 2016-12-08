@@ -43,6 +43,7 @@ public class NoticeController {
     public Result getClubInfo(@RequestBody Map<String,Integer> params){
         final int pageAccount=params.get(ParamKeys.PAGEACCOUNT);
         final int pageSize=params.get(ParamKeys.PAGESIZE);
+        logger.info("pageAccount:{}    pageSize:{}",pageAccount,pageSize);
         final PageInfo pageInfo =noticeServer.getNoticeList(pageAccount,pageSize);
         return ResultUtils.SuccessResultWithData(pageInfo);
     }
