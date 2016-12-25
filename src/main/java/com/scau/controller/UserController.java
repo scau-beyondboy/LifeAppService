@@ -4,6 +4,7 @@ import com.scau.common.constants.ParamKeys;
 import com.scau.dto.Result;
 import com.scau.entity.Token;
 import com.scau.entity.User;
+import com.scau.entity.UserDetail;
 import com.scau.service.TokenService;
 import com.scau.service.UserService;
 import com.scau.util.ResultUtils;
@@ -51,6 +52,27 @@ public class UserController {
             return ResultUtils.SuccessResultWithData(token);
         } else {
             return ResultUtils.InvalidNickNameOrPasswordResult;
+        }
+    }
+
+    @RequestMapping(value = "user/info",method = RequestMethod.POST)
+    public Result userInfo(@RequestBody UserDetail detail){
+        final UserDetail userInfo=userService.upLoadInfo(detail);
+        if(userInfo!=null){
+            return ResultUtils.SuccessResultWithData(userInfo);
+        }else {
+            return ResultUtils.getErrorResult("用户信息为空");
+        }
+    }
+
+    @RequestMapping(value = "user/getInfo",method = RequestMethod.POST)
+    public Result getUserInfo(@RequestBody Map<String,String> params){
+        final String userId=params.get(ParamKeys.USERID);
+        final UserDetail userDetail=userService.getUsrInfo(Long.valueOf(userId));
+        if(userDetail!=null){
+            return ResultUtils.SuccessResultWithData(userDetail);
+        }else {
+            return ResultUtils.getErrorResult("用户信息为空");
         }
     }
 }

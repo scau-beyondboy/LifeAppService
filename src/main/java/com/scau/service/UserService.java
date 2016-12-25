@@ -1,9 +1,11 @@
 package com.scau.service;
 
 import com.scau.dao.TokenMapper;
+import com.scau.dao.UserDetailMapper;
 import com.scau.dao.UserMapper;
 import com.scau.entity.Token;
 import com.scau.entity.User;
+import com.scau.entity.UserDetail;
 import com.scau.util.PasswordUtils;
 import com.scau.util.TokenUtils;
 import org.slf4j.Logger;
@@ -24,6 +26,8 @@ public class UserService {
     UserMapper userDao;
     @Autowired
     TokenMapper tokenMapper;
+    @Autowired
+    UserDetailMapper detailMapper;
     Logger logger = LoggerFactory.getLogger(UserService.class);
     public boolean register(User user){
         logger.debug("user_info:{}",user);
@@ -61,5 +65,22 @@ public class UserService {
         final Token token=TokenUtils.createToken(user);
         tokenMapper.updateByPrimaryKey(token);
         return token;
+    }
+
+    public UserDetail upLoadInfo(UserDetail userDetail){
+        logger.debug("user_Detail:{}",userDetail);
+        if(null!=detailMapper.selectByPrimaryKey(userDetail.getUserId())){
+            logger.info("process user fail, user Id {} has existed",userDetail.getUserId());
+            return detailMapper.selectByPrimaryKey(userDetail.getUserId());
+        }
+        detailMapper.insert(userDetail);
+        return userDetail;
+    }
+
+    public UserDetail getUsrInfo(final long userId){
+        logger.debug("userId:{}",userId);
+        final UserDetail userDetail=detailMapper.selectByPrimaryKey(userId);
+        logger.info("userDetail:{}",userDetail.toString());
+        return userDetail;
     }
 }

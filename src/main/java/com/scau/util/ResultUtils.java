@@ -17,4 +17,7 @@ public class ResultUtils {
     public static <T> Result SuccessResultWithData(T data) {
         return new Result(true, "success", 200, data);
     }
+    public static Result getErrorResult(final String msg){
+        return new Result(true,msg,400);
+    }
 }
