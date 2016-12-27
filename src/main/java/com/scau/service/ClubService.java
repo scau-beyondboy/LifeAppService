@@ -26,20 +26,21 @@ public class ClubService {
         clubInfoMapper.insert(clubInfo);
     }
 
-    public PageInfo getClubList(final int pageAccount, int pageSize){
-        final int star=(pageAccount-1)*pageSize;
+    public PageInfo getClubList(final int pageStart, int pageSize){
+//        final int star=(pageAccount-1)*pageSize;
         final int total=getTotal();
-        if(star>total){
-            return null;
-        }
-        if(star+pageSize>total){
-            pageSize=total-star;
-        }
+//        if(star>total){
+//            return null;
+//        }
+//        if(star+pageSize>total){
+//            pageSize=total-star;
+//        }
         final PageInfo<ClubInfo> pageInfo =new PageInfo<ClubInfo>();
+        pageSize=pageSize-pageStart;
         pageInfo.setCount(total);
-        pageInfo.setPageAccount(pageAccount);
+        pageInfo.setPageAccount(pageStart);
         pageInfo.setPageSize(pageSize);
-        List<ClubInfo> clubInfos=clubInfoMapper.getPartClubList(star,pageSize);
+        List<ClubInfo> clubInfos=clubInfoMapper.getPartClubList(pageStart,pageSize);
         pageInfo.setData(clubInfos);
         return pageInfo;
     }

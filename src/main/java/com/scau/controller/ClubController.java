@@ -42,9 +42,17 @@ public class ClubController {
     @RequestMapping(value = "/club/getList",method = RequestMethod.POST)
     @ResponseBody
     public Result getClubInfo(@RequestBody Map<String,Integer> params){
-        final int pageAccount=params.get(ParamKeys.PAGEACCOUNT);
+        final int pageStart=params.get(ParamKeys.PAGESTART);
         final int pageSize=params.get(ParamKeys.PAGESIZE);
-        final PageInfo pageInfo =clubService.getClubList(pageAccount,pageSize);
+        final PageInfo pageInfo =clubService.getClubList(pageStart,pageSize);
         return ResultUtils.SuccessResultWithData(pageInfo);
+    }
+
+    @RequestMapping(value = "/club/getTotal",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getTotal(){
+        final int total=clubService.getTotal();
+        logger.debug("total:{}",total);
+        return ResultUtils.SuccessResultWithData(total);
     }
 }
