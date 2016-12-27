@@ -41,10 +41,16 @@ public class NoticeController {
     @RequestMapping(value = "/notice/getList",method = RequestMethod.POST)
     @ResponseBody
     public Result getClubInfo(@RequestBody Map<String,Integer> params){
-        final int pageAccount=params.get(ParamKeys.PAGEACCOUNT);
+        final int pageAccount=params.get(ParamKeys.PAGESTART);
         final int pageSize=params.get(ParamKeys.PAGESIZE);
         logger.info("pageAccount:{}    pageSize:{}",pageAccount,pageSize);
         final PageInfo pageInfo =noticeServer.getNoticeList(pageAccount,pageSize);
         return ResultUtils.SuccessResultWithData(pageInfo);
+    }
+
+    @RequestMapping(value = "/notice/getTotal",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getTotal(){
+        return ResultUtils.SuccessResultWithData(noticeServer.getTotal());
     }
 }

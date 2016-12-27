@@ -26,20 +26,21 @@ public class NoticeServer {
         noticeInfoMapper.insert(noticeInfo);
     }
 
-    public PageInfo getNoticeList(final int pageAccount, int pageSize){
-        final int star=(pageAccount-1)*pageSize;
+    public PageInfo getNoticeList(final int pageStart, int pageEnd){
+//        final int star=(pageAccount-1)*pageEnd;
         final int total=getTotal();
-        if(star>total){
-            return null;
-        }
-        if(star+pageSize>total){
-            pageSize=total-star;
-        }
+//        if(star>total){
+//            return null;
+//        }
+//        if(star+pageEnd>total){
+//            pageEnd=total-star;
+//        }
         final PageInfo<NoticeInfo> pageInfo =new PageInfo<NoticeInfo>();
+        pageEnd = pageEnd -pageStart;
         pageInfo.setCount(total);
-        pageInfo.setPageAccount(pageAccount);
-        pageInfo.setPageSize(pageSize);
-        List<NoticeInfo> noticeInfos=noticeInfoMapper.getPartNoticeList(star,pageSize);
+        pageInfo.setPageAccount(pageStart);
+        pageInfo.setPageSize(pageEnd);
+        List<NoticeInfo> noticeInfos=noticeInfoMapper.getPartNoticeList(pageStart, pageEnd);
         pageInfo.setData(noticeInfos);
         return pageInfo;
     }
