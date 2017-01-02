@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scau.dao.PickUpInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.scau.entity.PickUpInfo" >
+    <id column="pickup_id" property="pickupId" jdbcType="BIGINT" />
+    <result column="pickup_phone" property="pickupPhone" jdbcType="VARCHAR" />
+    <result column="pickup_card_num" property="pickupCardNum" jdbcType="BIGINT" />
+    <result column="pickup_date" property="pickupDate" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.scau.entity.PickUpInfoWithBLOBs" extends="BaseResultMap" >
+    <result column="pickup_image" property="pickupImage" jdbcType="LONGVARCHAR" />
+    <result column="pickup_desc" property="pickupDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pickup_id, pickup_phone, pickup_card_num, pickup_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    pickup_image, pickup_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pickup_info
+    where pickup_id = #{pickupId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pickup_info
+    where pickup_id = #{pickupId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.scau.entity.PickUpInfoWithBLOBs" >
+    insert into pickup_info (pickup_id, pickup_phone, pickup_card_num, 
+      pickup_date, pickup_image, pickup_desc
+      )
+    values (#{pickupId,jdbcType=BIGINT}, #{pickupPhone,jdbcType=VARCHAR}, #{pickupCardNum,jdbcType=BIGINT}, 
+      #{pickupDate,jdbcType=DATE}, #{pickupImage,jdbcType=LONGVARCHAR}, #{pickupDesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.scau.entity.PickUpInfoWithBLOBs" >
+    insert into pickup_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pickupId != null" >
+        pickup_id,
+      </if>
+      <if test="pickupPhone != null" >
+        pickup_phone,
+      </if>
+      <if test="pickupCardNum != null" >
+        pickup_card_num,
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date,
+      </if>
+      <if test="pickupImage != null" >
+        pickup_image,
+      </if>
+      <if test="pickupDesc != null" >
+        pickup_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pickupId != null" >
+        #{pickupId,jdbcType=BIGINT},
+      </if>
+      <if test="pickupPhone != null" >
+        #{pickupPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupCardNum != null" >
+        #{pickupCardNum,jdbcType=BIGINT},
+      </if>
+      <if test="pickupDate != null" >
+        #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="pickupImage != null" >
+        #{pickupImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pickupDesc != null" >
+        #{pickupDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scau.entity.PickUpInfoWithBLOBs" >
+    update pickup_info
+    <set >
+      <if test="pickupPhone != null" >
+        pickup_phone = #{pickupPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupCardNum != null" >
+        pickup_card_num = #{pickupCardNum,jdbcType=BIGINT},
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date = #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="pickupImage != null" >
+        pickup_image = #{pickupImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pickupDesc != null" >
+        pickup_desc = #{pickupDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pickup_id = #{pickupId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.scau.entity.PickUpInfoWithBLOBs" >
+    update pickup_info
+    set pickup_phone = #{pickupPhone,jdbcType=VARCHAR},
+      pickup_card_num = #{pickupCardNum,jdbcType=BIGINT},
+      pickup_date = #{pickupDate,jdbcType=DATE},
+      pickup_image = #{pickupImage,jdbcType=LONGVARCHAR},
+      pickup_desc = #{pickupDesc,jdbcType=LONGVARCHAR}
+    where pickup_id = #{pickupId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scau.entity.PickUpInfo" >
+    update pickup_info
+    set pickup_phone = #{pickupPhone,jdbcType=VARCHAR},
+      pickup_card_num = #{pickupCardNum,jdbcType=BIGINT},
+      pickup_date = #{pickupDate,jdbcType=DATE}
+    where pickup_id = #{pickupId,jdbcType=BIGINT}
+  </update>
+</mapper>

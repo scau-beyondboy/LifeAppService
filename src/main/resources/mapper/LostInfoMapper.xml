@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scau.dao.LostInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.scau.entity.LostInfo" >
+    <id column="lost_id" property="lostId" jdbcType="BIGINT" />
+    <result column="lost_owner" property="lostOwner" jdbcType="VARCHAR" />
+    <result column="lost_phone" property="lostPhone" jdbcType="VARCHAR" />
+    <result column="lost_card_num" property="lostCardNum" jdbcType="BIGINT" />
+    <result column="lost_date" property="lostDate" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.scau.entity.LostInfoWithBLOBs" extends="BaseResultMap" >
+    <result column="lost_image" property="lostImage" jdbcType="LONGVARCHAR" />
+    <result column="lost_desc" property="lostDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    lost_id, lost_owner, lost_phone, lost_card_num, lost_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    lost_image, lost_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from lost_info
+    where lost_id = #{lostId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lost_info
+    where lost_id = #{lostId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.scau.entity.LostInfoWithBLOBs" >
+    insert into lost_info (lost_id, lost_owner, lost_phone, 
+      lost_card_num, lost_date, lost_image, 
+      lost_desc)
+    values (#{lostId,jdbcType=BIGINT}, #{lostOwner,jdbcType=VARCHAR}, #{lostPhone,jdbcType=VARCHAR}, 
+      #{lostCardNum,jdbcType=BIGINT}, #{lostDate,jdbcType=DATE}, #{lostImage,jdbcType=LONGVARCHAR}, 
+      #{lostDesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scau.entity.LostInfoWithBLOBs" >
+    insert into lost_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lostId != null" >
+        lost_id,
+      </if>
+      <if test="lostOwner != null" >
+        lost_owner,
+      </if>
+      <if test="lostPhone != null" >
+        lost_phone,
+      </if>
+      <if test="lostCardNum != null" >
+        lost_card_num,
+      </if>
+      <if test="lostDate != null" >
+        lost_date,
+      </if>
+      <if test="lostImage != null" >
+        lost_image,
+      </if>
+      <if test="lostDesc != null" >
+        lost_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lostId != null" >
+        #{lostId,jdbcType=BIGINT},
+      </if>
+      <if test="lostOwner != null" >
+        #{lostOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="lostPhone != null" >
+        #{lostPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="lostCardNum != null" >
+        #{lostCardNum,jdbcType=BIGINT},
+      </if>
+      <if test="lostDate != null" >
+        #{lostDate,jdbcType=DATE},
+      </if>
+      <if test="lostImage != null" >
+        #{lostImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="lostDesc != null" >
+        #{lostDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scau.entity.LostInfoWithBLOBs" >
+    update lost_info
+    <set >
+      <if test="lostOwner != null" >
+        lost_owner = #{lostOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="lostPhone != null" >
+        lost_phone = #{lostPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="lostCardNum != null" >
+        lost_card_num = #{lostCardNum,jdbcType=BIGINT},
+      </if>
+      <if test="lostDate != null" >
+        lost_date = #{lostDate,jdbcType=DATE},
+      </if>
+      <if test="lostImage != null" >
+        lost_image = #{lostImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="lostDesc != null" >
+        lost_desc = #{lostDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where lost_id = #{lostId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.scau.entity.LostInfoWithBLOBs" >
+    update lost_info
+    set lost_owner = #{lostOwner,jdbcType=VARCHAR},
+      lost_phone = #{lostPhone,jdbcType=VARCHAR},
+      lost_card_num = #{lostCardNum,jdbcType=BIGINT},
+      lost_date = #{lostDate,jdbcType=DATE},
+      lost_image = #{lostImage,jdbcType=LONGVARCHAR},
+      lost_desc = #{lostDesc,jdbcType=LONGVARCHAR}
+    where lost_id = #{lostId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scau.entity.LostInfo" >
+    update lost_info
+    set lost_owner = #{lostOwner,jdbcType=VARCHAR},
+      lost_phone = #{lostPhone,jdbcType=VARCHAR},
+      lost_card_num = #{lostCardNum,jdbcType=BIGINT},
+      lost_date = #{lostDate,jdbcType=DATE}
+    where lost_id = #{lostId,jdbcType=BIGINT}
+  </update>
+</mapper>

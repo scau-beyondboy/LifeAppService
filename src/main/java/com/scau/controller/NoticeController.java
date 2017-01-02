@@ -29,7 +29,7 @@ public class NoticeController {
     @Autowired
     private NoticeServer noticeServer;
     @RequestMapping(value = "/notice/add",method = RequestMethod.GET)
-    public String addClub(){
+    public String addNotice(){
         return "addNotice";
     }
     @RequestMapping(value ="/notice/addinfo",method = RequestMethod.POST)
