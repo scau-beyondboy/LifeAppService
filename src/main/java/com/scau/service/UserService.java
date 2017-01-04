@@ -83,4 +83,15 @@ public class UserService {
         logger.info("userDetail:{}",userDetail.toString());
         return userDetail;
     }
+
+    public UserDetail updateInfo(UserDetail userDetail){
+        logger.debug("user_Detail:{}",userDetail);
+        if(null!=detailMapper.selectByPrimaryKey(userDetail.getUserId())){
+            logger.info("user Id {} has existed",userDetail.getUserId());
+            detailMapper.updateByPrimaryKey(userDetail);
+            return userDetail;
+        }
+        detailMapper.insert(userDetail);
+        return userDetail;
+    }
 }

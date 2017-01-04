@@ -75,4 +75,14 @@ public class UserController {
             return ResultUtils.getErrorResult("用户信息为空");
         }
     }
+
+    @RequestMapping(value = "user/update",method = RequestMethod.POST)
+    public Result updateInfo(@RequestBody UserDetail detail){
+        final UserDetail userInfo=userService.updateInfo(detail);
+        if(userInfo!=null){
+            return ResultUtils.SuccessResultWithData(userInfo);
+        }else {
+            return ResultUtils.getErrorResult("用户信息为空");
+        }
+    }
 }
