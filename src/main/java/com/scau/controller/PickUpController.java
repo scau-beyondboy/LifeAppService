@@ -1,5 +1,7 @@
 package com.scau.controller;
 
+import com.scau.common.constants.ParamKeys;
+import com.scau.dto.PageInfo;
 import com.scau.dto.Result;
 import com.scau.entity.PickUpInfoWithBLOBs;
 import com.scau.service.PickUpService;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 /**
  * @Author: beyondboy
@@ -29,5 +33,21 @@ public class PickUpController {
     public Result addLost(@RequestBody PickUpInfoWithBLOBs upInfoWithBLOBs){
         mPickupService.addPickUpInfo(upInfoWithBLOBs);
         return ResultUtils.SuccessResult;
+    }
+
+    @RequestMapping(value = "/pickup/getList",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getClubInfo(@RequestBody Map<String,Integer> params){
+        final int pageAccount=params.get(ParamKeys.PAGESTART);
+        final int pageSize=params.get(ParamKeys.PAGESIZE);
+        logger.info("pageAccount:{}    pageSize:{}",pageAccount,pageSize);
+        final PageInfo pageInfo =mPickupService.getPickList(pageAccount,pageSize);
+        return ResultUtils.SuccessResultWithData(pageInfo);
+    }
+
+    @RequestMapping(value = "/pickup/getTotal",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getTotal(){
+        return ResultUtils.SuccessResultWithData(mPickupService.getTotal());
     }
 }

@@ -3,6 +3,8 @@ package com.scau.dao;
 import com.scau.entity.PickUpInfo;
 import com.scau.entity.PickUpInfoWithBLOBs;
 
+import java.util.List;
+
 public interface PickUpInfoMapper {
     int deleteByPrimaryKey(Long pickupId);
 
@@ -17,4 +19,8 @@ public interface PickUpInfoMapper {
     int updateByPrimaryKeyWithBLOBs(PickUpInfoWithBLOBs record);
 
     int updateByPrimaryKey(PickUpInfo record);
+
+    int getTotal();
+
+    List<PickUpInfoWithBLOBs> getPartPickList(Integer pageCount, Integer pageSize);
 }
