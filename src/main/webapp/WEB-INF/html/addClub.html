@@ -105,16 +105,17 @@
                     jsonStr[this.name] = this.value || '';
                 }
             });
-           // console.log(jsonStr);
+            console.log("data:>>>>>>>>>>>>%s",jsonStr.toString());
             $.ajax({
                 type:"post",
-//                dataType:"jsonp",
+                dataType:"json",
                 data:jsonStr,
                 url:"/club/addInfo",
                 success: function (data) {
-                    alert("添加社团成功");
+                    console.log("data>>>>%s",data.toString());
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("testStatus>>>>%s,errorThrown>>>>>>>%s",textStatus,errorThrown.toString());
 //                    alert("添加社团出错");
                 }
 //                success: function(){

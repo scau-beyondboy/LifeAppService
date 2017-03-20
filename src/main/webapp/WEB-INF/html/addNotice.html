@@ -115,21 +115,16 @@
             //console.log(jsonStr);
             $.ajax({
                 type: "post",
-              //  dataType:"json",
+                dataType:"json",
                 data: jsonStr,
                 url:"/notice/addinfo",
                 success: function (data) {
-                    alert("添加公告信息成功");
+                    console.log("data>>>>%s",data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                    alert("添加公告储出错");
+                    console.log(XMLHttpRequest,textStatus,errorThrown);
+                        // alert("添加公告储出错");
                 }
-//                success: function () {
-//                    alert("添加公告信息成功");
-//                },
-//                error: function () {
-//                    alert("添加公告出错");
-//                }
             });
         })
     })
