@@ -35,6 +35,29 @@
     <include refid="Blob_Column_List" />
     from notice_info ORDER BY notice_id limit #{0},#{1}
   </select>
+  <select id="queryByCdn" resultType="com.scau.entity.NoticeInfo">
+    SELECT * FROM notice_info
+    <where>
+      <if test="field!=null  and condition!=null">
+        <choose>
+          <when test="field=='notice_date'.toString()  and condition!=null">
+            ${field} LIKE '${condition}%'
+          </when>
+          <when test="field!=null  and condition!=null">
+            ${field}='${condition}'
+          </when>
+        </choose>
+      </if>
+    </where>
+  </select>
+  <select id="getTotalNoticeList" resultType="com.scau.entity.NoticeInfo">
+    SELECT * FROM notice_info order by notice_id desc
+  </select>
+  <select id="getLimitNotice" resultType="com.scau.entity.NoticeInfo">
+    <if test="start>=0 and end>=0">
+      SELECT * FROM notice_info order by notice_id desc LIMIT ${start},${end} ;
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from notice_info
     where notice_id = #{noticeId,jdbcType=BIGINT}

@@ -120,6 +120,7 @@
                 url:"/notice/addinfo",
                 success: function (data) {
                     console.log("data>>>>%s",data);
+                    window.location.href="/notice/show";
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest,textStatus,errorThrown);

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/showArticle.css" rel="stylesheet" type="text/css"/>
+    <script src="../js/jquery-2.2.0.min.js"></script>
+    <script src="../js/noticeJsonData.js"></script>
+    <title>显示公告信息</title>
+</head>
+<body class="/notice/getAllNotice">
+搜索框：<input id="condition" type="text" placeholder="输入回车搜索" onkeydown="summit()"/>
+<select id="field" onchange="this.parentNode.nextSibling.value=this.value">
+    <option value="notice_id">公告序号</option>
+    <option value="notice_title">公告标题</option>
+    <option value="notice_date">公告时间</option>
+    <option value="notice_editor">公告编辑者</option>
+    <option value="notice_iden">公告来源</option>
+</select>
+<!--</form>-->
+<br/><br/>
+<div id="dataTable">
+
+</div>
+<br/>
+<br/>
+<button id="page" type="button" onclick="pages()">分页</button>
+<button id="pre" type="button" onclick="pre()">上一页</button>
+<button id="next" type="button" onclick="next()">下一页</button>
+</body>
+<script>
+    function summit() {
+        if (event.keyCode == 13) {
+            var field = $("#field").val();
+            var condition = $("#condition").val();
+            $.ajax(
+                    {
+                        url: "/notice/queryCondition",
+                        type: "get",
+                        dataType: 'json',
+                        data: {"field": field, "condition": condition},
+                        success: function (data) {
+                            console.log(data);
+                            createShowingTable(data);
+                            // refresh_date.onload;
+                        },
+                        error: function () {
+                            console.log("summit>>>>>>>>>选择条件查询有误");
+                        }
+                    }
+            );
+        }
+    }
+    var currentPage = 1;
+    var rowNum = 4;
+    var start = 0;//首页为1
+    var end = currentPage * rowNum;
+    var total = 0;
+    var totalPage = 0;
+    /**分页显示*/
+    function pages() {
+        $.ajax(
+                {
+                    url: "/notice/getCount",
+                    type: "get",
+                    success: function (data) {
+                        currentPage = 1;
+                        start = 0;//首页为1
+                        end = rowNum;
+                        total = data;
+                        totalPage = parseInt(data / rowNum);
+                        if (Math.round(data % rowNum) != 0) {
+                            totalPage += 1;
+                        }
+                        displayPage(start, end);
+                    },
+                    error: function () {
+                        alert("选择条件查询有误")
+                    }
+                }
+        );
+    }
+    //分页显示上一页
+    function pre() {
+        currentPage--;
+        if (currentPage <= 0) {
+            currentPage = 1;
+        }
+        start = (currentPage - 1) * rowNum;
+        if (start < 0) {
+            start = 0;
+        }
+        end = start + rowNum;
+        if (end > total) {
+            end = total;
+        }
+        console.log("end:" + end + "  start:" + start + "   currentPage:" + currentPage);
+        displayPage(start, end);
+    }
+    // var isLast = false;
+    //分页显示下一页
+    function next() {
+        currentPage++;
+        if (currentPage > totalPage) {
+            currentPage = totalPage;
+        }
+        start = (currentPage - 1) * rowNum;
+        end = start + rowNum;
+        if (end > total) {
+            end = total;
+        }
+        console.log("end:" + end + "  start:" + start);
+        displayPage(start, end);
+    }
+    function displayPage(start, end) {
+        $.ajax(
+                {
+                    url: "/notice/page",
+                    type: "get",
+                    dataType: 'json',
+                    data: {"start": start, "end": end},
+                    success: function (data) {
+                        console.log(data);
+                        createShowingTable(data);
+                        // refresh_date.onload;
+                    },
+                    error: function () {
+                        alert("选择条件查询有误")
+                    }
+                }
+        )
+    }
+</script>
+</html>

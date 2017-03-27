@@ -2,7 +2,9 @@ package com.scau.service;
 
 import com.scau.dao.NoticeInfoMapper;
 import com.scau.dto.PageInfo;
+import com.scau.entity.ClubInfo;
 import com.scau.entity.NoticeInfo;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,21 @@ public class NoticeServer {
     }
     public int getTotal(){
         return noticeInfoMapper.getTotal();
+    }
+
+    public List<NoticeInfo> queryByCdn(@Param("field") String field, @Param("condition") String condition) {
+        return  noticeInfoMapper.queryByCdn(field,condition);
+    }
+
+    public List<NoticeInfo> getAllNotice(){
+        return noticeInfoMapper.getTotalNoticeList();
+    }
+
+    public List<NoticeInfo> getLimitNotcie(final int pageStart, int pageEnd){
+        return noticeInfoMapper.getLimitNotice(pageStart,pageEnd);
+    }
+
+    public int delNotice(final long id){
+        return noticeInfoMapper.deleteByPrimaryKey(id);
     }
 }

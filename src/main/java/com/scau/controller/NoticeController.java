@@ -6,15 +6,14 @@ import com.scau.dto.Result;
 import com.scau.entity.NoticeInfo;
 import com.scau.service.NoticeServer;
 import com.scau.util.ResultUtils;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,13 +33,13 @@ public class NoticeController {
     }
     @RequestMapping(value ="/notice/addinfo",method = RequestMethod.POST)
     @ResponseBody
-    public Result addClubInfo(NoticeInfo noticeInfo){
+    public Result addnoticeInfo(NoticeInfo noticeInfo){
         noticeServer.addNotice(noticeInfo);
         return ResultUtils.SuccessResult;
     }
     @RequestMapping(value = "/notice/getList",method = RequestMethod.POST)
     @ResponseBody
-    public Result getClubInfo(@RequestBody Map<String,Integer> params){
+    public Result getnoticeInfo(@RequestBody Map<String,Integer> params){
         final int pageAccount=params.get(ParamKeys.PAGESTART);
         final int pageSize=params.get(ParamKeys.PAGESIZE);
         logger.info("pageAccount:{}    pageSize:{}",pageAccount,pageSize);
@@ -52,5 +51,46 @@ public class NoticeController {
     @ResponseBody
     public Result getTotal(){
         return ResultUtils.SuccessResultWithData(noticeServer.getTotal());
+    }
+
+    @RequestMapping(value = "/notice/show",method = RequestMethod.GET)
+    public String shownotice(){
+        return "showNotice";
+    }
+
+    /**根据条件查询语句*/
+    @RequestMapping("/notice/queryCondition")
+    @ResponseBody
+    public List<NoticeInfo> queryCondition(@Param("field")String field, @Param("condition")String condition) {
+        List<NoticeInfo> noticeInfos=noticeServer.queryByCdn(field,condition);
+        logger.debug("noticeInfos:{}",noticeInfos);
+        return noticeInfos;
+    }
+
+    @RequestMapping(value = "/notice/getCount")
+    @ResponseBody
+    public int getCount(){
+        final int total=noticeServer.getTotal();
+        logger.debug("total:{}",total);
+        return total;
+    }
+
+    @RequestMapping(value = "/notice/getAllNotice")
+    @ResponseBody
+    public List<NoticeInfo> getAllnotice(){
+        return noticeServer.getAllNotice();
+    }
+
+    @RequestMapping(value = "/notice/page")
+    @ResponseBody
+    public List<NoticeInfo> getnoticePage(@Param("start")int start,@Param("end")int end){
+        return noticeServer.getLimitNotcie(start,end);
+    }
+
+    @RequestMapping(value = "/notice/delete")
+    public String deletenotice(@RequestParam int noticeId){
+        final int deleteId=noticeServer.delNotice(noticeId);
+        logger.debug("deleteId:{}",deleteId);
+        return "redirect:/notice/show";
     }
 }
