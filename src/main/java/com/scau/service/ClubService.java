@@ -3,6 +3,7 @@ package com.scau.service;
 import com.scau.dao.ClubInfoMapper;
 import com.scau.dto.PageInfo;
 import com.scau.entity.ClubInfo;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,21 @@ public class ClubService {
 
     public int getTotal(){
         return clubInfoMapper.getTotal();
+    }
+
+    public List<ClubInfo> queryByCdn(@Param("field") String field, @Param("condition") String condition) {
+        return clubInfoMapper.queryByCdn(field,condition);
+    }
+
+    public List<ClubInfo> getAllClub(){
+        return clubInfoMapper.getTotalClubList();
+    }
+
+    public List<ClubInfo> getLimitClub(final int pageStart, int pageEnd){
+        return clubInfoMapper.getLimitClub(pageStart,pageEnd);
+    }
+
+    public int delClub(final long id){
+        return clubInfoMapper.deleteByPrimaryKey(id);
     }
 }

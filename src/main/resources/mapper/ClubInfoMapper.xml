@@ -35,6 +35,30 @@
   <select id="getTotal" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM club_info;
   </select>
+  <select id="queryByCdn" resultType="com.scau.entity.ClubInfo">
+    SELECT * FROM club_info
+    <where>
+      <if test="field!=null  and condition!=null">
+        <choose>
+
+          <when test="field!=null  and condition!=null">
+            ${field}='${condition}'
+          </when>
+          <!--  <otherwise>
+              ${field}='${condition}'
+            </otherwise>-->
+        </choose>
+      </if>
+    </where>
+  </select>
+  <select id="getTotalClubList" resultType="com.scau.entity.ClubInfo">
+    SELECT * FROM club_info order by club_id desc
+  </select>
+  <select id="getLimitClub" resultType="com.scau.entity.ClubInfo">
+    <if test="start>=0 and end>=0">
+      SELECT * FROM club_info order by club_id desc LIMIT ${start},${end} ;
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from club_info
     where club_id = #{clubId,jdbcType=BIGINT}

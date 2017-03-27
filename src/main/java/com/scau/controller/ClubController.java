@@ -6,15 +6,14 @@ import com.scau.dto.Result;
 import com.scau.entity.ClubInfo;
 import com.scau.service.ClubService;
 import com.scau.util.ResultUtils;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +31,12 @@ public class ClubController {
     public String addClub(){
         return "addClub";
     }
+
+    @RequestMapping(value = "/club/show",method = RequestMethod.GET)
+    public String showClub(){
+        return "showClub";
+    }
+
     @RequestMapping(value = "/club/addInfo",method = RequestMethod.POST)
     @ResponseBody
     public Result addClubInfo(ClubInfo clubInfo){
@@ -54,5 +59,41 @@ public class ClubController {
         final int total=clubService.getTotal();
         logger.debug("total:{}",total);
         return ResultUtils.SuccessResultWithData(total);
+    }
+
+    /**根据条件查询语句*/
+    @RequestMapping("/club/queryCondition")
+    @ResponseBody
+    public List<ClubInfo> queryCondition(@Param("field")String field, @Param("condition")String condition) {
+        List<ClubInfo> clubInfos=clubService.queryByCdn(field,condition);
+        logger.debug("clubInfos:{}",clubInfos);
+        return clubInfos;
+    }
+
+    @RequestMapping(value = "/club/getCount")
+    @ResponseBody
+    public int getCount(){
+        final int total=clubService.getTotal();
+        logger.debug("total:{}",total);
+        return total;
+    }
+
+    @RequestMapping(value = "/club/getAllClub")
+    @ResponseBody
+    public List<ClubInfo> getAllClub(){
+        return clubService.getAllClub();
+    }
+
+    @RequestMapping(value = "/club/page")
+    @ResponseBody
+    public List<ClubInfo> getClubPage(@Param("start")int start,@Param("end")int end){
+        return clubService.getLimitClub(start,end);
+    }
+
+    @RequestMapping(value = "/club/delete")
+    public String deleteClub(@RequestParam int clubId){
+        final int deleteId=clubService.delClub(clubId);
+        logger.debug("deleteId:{}",deleteId);
+        return "redirect:/club/show";
     }
 }
