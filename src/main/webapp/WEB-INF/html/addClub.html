@@ -113,6 +113,7 @@
                 url:"/club/addInfo",
                 success: function (data) {
                     console.log("data>>>>%s",data.toString());
+                    window.location.href="/club/show";
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("testStatus>>>>%s,errorThrown>>>>>>>%s",textStatus,errorThrown.toString());

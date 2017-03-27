@@ -37,7 +37,7 @@ public class ClubController {
         return "showClub";
     }
 
-    @RequestMapping(value = "/club/addInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/club/addInfo",method = {RequestMethod.POST})
     @ResponseBody
     public Result addClubInfo(ClubInfo clubInfo){
         clubService.addClub(clubInfo);
