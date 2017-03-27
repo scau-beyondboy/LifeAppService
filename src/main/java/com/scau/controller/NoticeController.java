@@ -28,7 +28,8 @@ public class NoticeController {
     @Autowired
     private NoticeServer noticeServer;
     @RequestMapping(value = "/notice/add",method = RequestMethod.GET)
-    public String addNotice(){
+    public String addNotice(@CookieValue(value ="token",defaultValue = "beyondboy")String tokenCookie){
+        logger.debug("cookie:{}",tokenCookie);
         return "addNotice";
     }
     @RequestMapping(value ="/notice/addinfo",method = RequestMethod.POST)
@@ -54,7 +55,8 @@ public class NoticeController {
     }
 
     @RequestMapping(value = "/notice/show",method = RequestMethod.GET)
-    public String shownotice(){
+    public String shownotice(@CookieValue(value ="token",defaultValue = "beyondboy")String tokenCookie){
+        logger.debug("cookie:{}",tokenCookie);
         return "showNotice";
     }
 

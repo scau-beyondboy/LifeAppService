@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" style="height: 100%;">
+<head >
     <meta charset="UTF-8">
     <link href="../css/showArticle.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/page.css" rel="stylesheet" type="text/css">
     <script src="../js/jquery-2.2.0.min.js"></script>
     <script src="../js/noticeJsonData.js"></script>
     <title>显示公告信息</title>
 </head>
-<body class="/notice/getAllNotice">
+<body class="/notice/getAllNotice" style="height: 100%;">
 搜索框：<input id="condition" type="text" placeholder="输入回车搜索" onkeydown="summit()"/>
 <select id="field" onchange="this.parentNode.nextSibling.value=this.value">
     <option value="notice_id">公告序号</option>

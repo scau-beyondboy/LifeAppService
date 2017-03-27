@@ -28,12 +28,14 @@ public class ClubController {
     @Autowired
     private  ClubService clubService;
     @RequestMapping(value = "/club/add",method = RequestMethod.GET)
-    public String addClub(){
+    public String addClub(@CookieValue(value ="token",defaultValue = "beyondboy")String tokenCookie){
+        logger.debug("cookie:{}",tokenCookie);
         return "addClub";
     }
 
     @RequestMapping(value = "/club/show",method = RequestMethod.GET)
-    public String showClub(){
+    public String showClub(@CookieValue(value ="token",defaultValue = "beyondboy")String tokenCookie){
+        logger.debug("cookie:{}",tokenCookie);
         return "showClub";
     }
 

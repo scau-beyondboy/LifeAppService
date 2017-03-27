@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员操作界面</title>
+    <link href="../css/page.css" rel="stylesheet" type="text/css">
+    <script src="../js/jquery-2.2.0.min.js"></script>
+    <script>
+        function loadContent(url) {
+            var $iframe = $('#content');
+            if ($iframe.length) {
+                $iframe.attr('src', url);
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 15%;
+            background-color: #f1f1f1;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        li a {
+            display: block;
+            color: #000;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        li a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+    </style>
+</head>
+<body style="height: 100%;">
+<ul>
+    <li><a  onclick="return loadContent('/club/show')">管理社团信息</a></li>
+    <li><a  onclick="return loadContent('/notice/show')">管理公告信息</a></li>
+</ul>
+<div style="margin-left:25%;padding:1px 16px;width:85%;height:100%">
+    <iframe id="content"  src=""  style="width:80%;height:100%"/>
+
+</div>
+</body>
+
+
+</html>
