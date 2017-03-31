@@ -50,7 +50,7 @@ function createShowingTable(data)
         tableStr=tableStr+"<tr><td>"+data[i].noticeId+"</td><td>"+data[i].noticeTitle+"</td>"+"<td>"+data[i].noticeDate+"</td>"
             +"<td>"+data[i].noticeEditor+"</td>"
             +"<td>"+data[i].noticeIden+"</td>"
-        +"<td><a href=/notice/add>添加</a>&nbsp;&nbsp;<a href=/notice/delete?noticeId="+data[i].noticeId+">删除</a> </td></tr>";
+        +"<td><a href=../notice/add>添加</a>&nbsp;&nbsp;<a href=../notice/delete?noticeId="+data[i].noticeId+">删除</a> </td></tr>";
     }
     tableStr=tableStr+"</table>";
     //将动态生成的table添加的事先隐藏的div中

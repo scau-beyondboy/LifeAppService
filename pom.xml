@@ -161,7 +161,12 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>oes</finalName>
+        <finalName>LifeAppService</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

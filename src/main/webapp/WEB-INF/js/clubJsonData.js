@@ -48,7 +48,7 @@ function createShowingTable(data)
     for(var i=0;i<len;i++)
     {
         tableStr=tableStr+"<tr><td>"+data[i].clubId+"</td><td>"+data[i].clubName+"</td>"+"<td>"+data[i].clubWeixinNum+"</td>"
-        +"<td><a href=/club/add>添加</a>&nbsp;&nbsp;<a href=/club/delete?clubId="+data[i].clubId+">删除</a> </td></tr>";
+        +"<td><a href=../club/add>添加</a>&nbsp;&nbsp;<a href=../club/delete?clubId="+data[i].clubId+">删除</a> </td></tr>";
     }
     tableStr=tableStr+"</table>";
     //将动态生成的table添加的事先隐藏的div中

@@ -8,7 +8,7 @@
     <script src="../js/noticeJsonData.js"></script>
     <title>显示公告信息</title>
 </head>
-<body class="/notice/getAllNotice" style="height: 100%;">
+<body class="../notice/getAllNotice" style="height: 100%;">
 搜索框：<input id="condition" type="text" placeholder="输入回车搜索" onkeydown="summit()"/>
 <select id="field" onchange="this.parentNode.nextSibling.value=this.value">
     <option value="notice_id">公告序号</option>
@@ -35,7 +35,7 @@
             var condition = $("#condition").val();
             $.ajax(
                     {
-                        url: "/notice/queryCondition",
+                        url: "../notice/queryCondition",
                         type: "get",
                         dataType: 'json',
                         data: {"field": field, "condition": condition},
@@ -61,7 +61,7 @@
     function pages() {
         $.ajax(
                 {
-                    url: "/notice/getCount",
+                    url: "../notice/getCount",
                     type: "get",
                     success: function (data) {
                         currentPage = 1;
@@ -115,7 +115,7 @@
     function displayPage(start, end) {
         $.ajax(
                 {
-                    url: "/notice/page",
+                    url: "../notice/page",
                     type: "get",
                     dataType: 'json',
                     data: {"start": start, "end": end},

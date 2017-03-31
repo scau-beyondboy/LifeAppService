@@ -110,10 +110,10 @@
                 type:"post",
                 dataType:"json",
                 data:jsonStr,
-                url:"/club/addInfo",
+                url:"../club/addInfo",
                 success: function (data) {
                     console.log("data>>>>%s",data.toString());
-                    window.location.href="/club/show";
+                    window.location.href="../club/show";
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log("testStatus>>>>%s,errorThrown>>>>>>>%s",textStatus,errorThrown.toString());
